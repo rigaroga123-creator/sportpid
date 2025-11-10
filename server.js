@@ -5,10 +5,13 @@ const app = express();
 const PORT = process.env.PORT || 10000;
 
 async function getM3U8(url) {
+  // Puppeteer koristi svoj Chromium iz node_modules
   const browser = await puppeteer.launch({
     headless: true,
     args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    executablePath: puppeteer.executablePath(),
   });
+
   const page = await browser.newPage();
   await page.setUserAgent(
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120 Safari/537.36"
