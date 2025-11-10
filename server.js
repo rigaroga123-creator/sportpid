@@ -1,9 +1,9 @@
 import express from "express";
-import puppeteer from "puppeteer-core";
+import puppeteer from "puppeteer";
 import puppeteerExtra from "puppeteer-extra";
 import StealthPlugin from "puppeteer-extra-plugin-stealth";
 
-puppeteerExtra.use(StealthPlugin()); // dodaj stealth plugin
+puppeteerExtra.use(StealthPlugin());
 
 const app = express();
 const PORT = process.env.PORT || 10000;
@@ -12,7 +12,7 @@ async function getM3U8(url) {
   const browser = await puppeteerExtra.launch({
     headless: true,
     args: ["--no-sandbox", "--disable-setuid-sandbox"],
-    executablePath: puppeteer.executablePath(),
+    // full Puppeteer automatski koristi Chromium, nije potreban executablePath
   });
 
   const page = await browser.newPage();
@@ -30,9 +30,7 @@ async function getM3U8(url) {
     if (u.includes(".m3u8")) m3u8 = u;
   });
 
-  // čekaj 15 sekundi da se svi requesti učitaju
-  await page.waitForTimeout(15000);
-
+  await page.waitForTimeout(15000); // 15 sekundi da se svi requesti učitaju
   await browser.close();
 
   if (!m3u8) throw new Error("m3u8 not found");
