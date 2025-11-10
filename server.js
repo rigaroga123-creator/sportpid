@@ -11,8 +11,8 @@ const PORT = process.env.PORT || 10000;
 async function getM3U8(url) {
   const browser = await puppeteerExtra.launch({
     headless: true,
-    args: ["--no-sandbox", "--disable-setuid-sandbox"],
-    // full Puppeteer automatski koristi Chromium, nije potreban executablePath
+    args: ["--no-sandbox", "--disable-setuid-sandbox"]
+    // ne koristiti executablePath
   });
 
   const page = await browser.newPage();
@@ -30,7 +30,7 @@ async function getM3U8(url) {
     if (u.includes(".m3u8")) m3u8 = u;
   });
 
-  await page.waitForTimeout(15000); // 15 sekundi da se svi requesti učitaju
+  await page.waitForTimeout(15000); // 15 sekundi čekanja
   await browser.close();
 
   if (!m3u8) throw new Error("m3u8 not found");
