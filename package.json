@@ -5,10 +5,10 @@
   "type": "module",
   "scripts": {
     "start": "node server.js",
-    "postinstall": "puppeteer install"
+    "postinstall": "npx puppeteer install"
   },
   "dependencies": {
     "express": "^4.19.2",
-    "puppeteer": "^22.7.0"
+    "puppeteer-core": "^22.7.0"
   }
 }
