@@ -1,15 +1,14 @@
 import express from "express";
-import puppeteer from "puppeteer";
+import puppeteer from "puppeteer-core";
 
 const app = express();
 const PORT = process.env.PORT || 10000;
 
 async function getM3U8(url) {
-  // Puppeteer koristi svoj Chromium iz node_modules
   const browser = await puppeteer.launch({
     headless: true,
     args: ["--no-sandbox", "--disable-setuid-sandbox"],
-    executablePath: puppeteer.executablePath(),
+    executablePath: puppeteer.executablePath(), // koristi Chromium iz node_modules
   });
 
   const page = await browser.newPage();
